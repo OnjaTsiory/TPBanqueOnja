@@ -13,9 +13,32 @@
             </ui:define>
 
             <ui:define name="content">
-                content
+                <h:form id="form">
+                    <h:panelGrid columns="3">
+                        Id compte source : 
+                        <h:inputText id="source" size="3" value="#{transfertArgent.idSource}"
+                                     required="true"
+                                     converterMessage="L'id est un nombre entier"/>
+                        <h:message for="source"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3">
+                        Id compte destination : 
+                        <h:inputText id="destination" size="3" value="#{transfertArgent.idDestination}"
+                                     required="true"
+                                     converterMessage="L'id est un nombre entier"/>
+                        <h:message for="destination"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3">
+                        Montant : 
+                        <h:inputText id="montant" size="3" value="#{transfertArgent.montant}"
+                                     required="true"
+                                     converterMessage="La somme doit être un nombre entier"/>
+                        <h:message for="montant"/>
+                    </h:panelGrid>
+                    <h:commandButton value="Transferer" action="#{transfertArgent.transferer()}"/>
+                </h:form>
                 <h:link outcome="/index" value="Retour"/>
-                <h:messages/>
+                <h:messages for="form" />
             </ui:define>
 
         </ui:composition>

@@ -16,6 +16,34 @@ import mg.itu.onja.tpbanqueonja.ejb.GestionnaireCompte;
 @Named(value = "transfertArgent")
 @RequestScoped
 public class TransfertArgent {
+    private int idSource;
+    private int idDestination;
+    private int montant;
+
+    public int getIdSource() {
+        return idSource;
+    }
+
+    public void setIdSource(int idSource) {
+        this.idSource = idSource;
+    }
+
+    public int getIdDestination() {
+        return idDestination;
+    }
+
+    public void setIdDestination(int idDestination) {
+        this.idDestination = idDestination;
+    }
+
+    public int getMontant() {
+        return montant;
+    }
+
+    public void setMontant(int montant) {
+        this.montant = montant;
+    }
+    
     @EJB
     GestionnaireCompte gestionnaireCompte;
     
@@ -23,6 +51,10 @@ public class TransfertArgent {
      * Creates a new instance of TransfertArgent
      */
     public TransfertArgent() {
+    }
+    
+    public String transferer(){
+        return "listeComptes?faces-redirect=true";
     }
     
 }

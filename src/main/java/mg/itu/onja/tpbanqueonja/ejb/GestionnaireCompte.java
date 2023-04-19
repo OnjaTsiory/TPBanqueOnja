@@ -16,35 +16,53 @@ import mg.itu.onja.tpbanqueonja.entities.CompteBancaire;
  *
  * @author ELITEBOOK
  */
-@DataSourceDefinition (
-    className="com.mysql.cj.jdbc.MysqlDataSource",
-    name="java:app/jdbc/banque",
-    serverName="localhost",
-    portNumber=3306,
-    user="otuser",              // nom et
-    password="#mdpMysql123", // mot de passe que vous avez donnés lors de la création de la base de données
-    databaseName="banque",
-    properties = {
-      "useSSL=false",
-      "allowPublicKeyRetrieval=true"
-    }
+@DataSourceDefinition(
+        className = "com.mysql.cj.jdbc.MysqlDataSource",
+        name = "java:app/jdbc/banque",
+        serverName = "localhost",
+        portNumber = 3306,
+        user = "otuser", // nom et
+        password = "#mdpMysql123", // mot de passe que vous avez donnés lors de la création de la base de données
+        databaseName = "banque",
+        properties = {
+            "useSSL=false",
+            "allowPublicKeyRetrieval=true"
+        }
 )
 @Stateless
 public class GestionnaireCompte {
+
     @PersistenceContext(unitName = "banquePU")
     private EntityManager em;
+
     public void creerCompte(CompteBancaire c) {
         em.persist(c);
     }
-    
+
     public List<CompteBancaire> getAllComptes() {
         String request = "select c from CompteBancaire c";
         List<CompteBancaire> list = em.createQuery(request).getResultList();
         return list;
-    } 
-    
-    public int nbComptes(){
+    }
+
+    public int nbComptes() {
         //String request = "select count(c) from comptebancaire c";
         return this.getAllComptes().size();
+    }
+
+    public void transferer(CompteBancaire source, CompteBancaire destination,
+            int montant) {
+        source.retirer(montant);
+        destination.deposer(montant);
+        update(source);
+        update(destination);
+    }
+
+    public CompteBancaire update(CompteBancaire compteBancaire) {
+        return em.merge(compteBancaire);
+    }
+    
+    public CompteBancaire getCompteBancaireById(int id){
+        return null;
     }
 }
